@@ -69,9 +69,8 @@
                 }
             },
             "dependsOn": [
-                "[concat('Microsoft.Compute/virtualMachines/', parameters('computeSettings').wsVmName)]",
-                "[concat('Microsoft.Compute/virtualMachines/', parameters('computeSettings').chefAutoVmName,'/extensions/chefupgrade_setup')]"
-            ]
+                "[concat('Microsoft.Compute/virtualMachines/', parameters('computeSettings').wsVmName)]"
+                 ]
         }
     ]
 }
