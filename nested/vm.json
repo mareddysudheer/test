@@ -14,7 +14,7 @@
         {
             "name": "[parameters('computeSettings').wsVmName]",
             "type": "Microsoft.Compute/virtualMachines",
-            "apiVersion": "2015-06-15",
+            "apiVersion": "2016-04-30-preview",
             "location": "[parameters('computeSettings').location]",
            
             "properties": {
@@ -54,7 +54,7 @@
             "name": "[concat(parameters('computeSettings').wsVmName,'/workstation_setup')]",
             "type": "Microsoft.Compute/virtualMachines/extensions",
             "location": "[parameters('computeSettings').location]",
-            "apiVersion": "2015-06-15",
+            "apiVersion": "2016-04-30-preview",
             "properties": {
                 "publisher": "Microsoft.Compute",
                 "type": "CustomScriptExtension",
