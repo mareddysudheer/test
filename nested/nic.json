@@ -35,31 +35,6 @@
                     "id": "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('networkSettings').wsNsg)]"
                 }
             }
-        },
-         {
-            "name": "[parameters('networkSettings').chefAutoNic]",
-            "type": "Microsoft.Network/networkInterfaces",
-            "apiVersion": "[parameters('networkSettings').networkApiVersion]",
-            "location": "[parameters('networkSettings').location]",
-            "properties": {
-                "ipConfigurations": [
-                    {
-                        "name": "ipconfig1",
-                        "properties": {
-                            "subnet": {
-                                "id": "[parameters('subnetRef')]"
-                            },
-                            "privateIPAllocationMethod": "Dynamic",
-                            "publicIpAddress": {
-                                "id": "[resourceId('Microsoft.Network/publicIpAddresses', parameters('networkSettings').chefAutoPip)]"
-                            }
-                        }
-                    }
-                ],
-                "networkSecurityGroup": {
-                    "id": "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('networkSettings').chefautoNsg)]"
-                }
-            }
         }
     ]
 }
