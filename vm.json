@@ -68,7 +68,7 @@
                         "https://raw.githubusercontent.com/sudheermareddy/test/master/workstaionsetup1.ps1"
                     ],
                            
-                   "commandToExecute": "[concat('powershell.exe -File workstaionsetup1')]"
+                   "commandToExecute": "[concat('powershell.exe -File workstaionsetup1.ps1')]"
                 }
             },
             "dependsOn": [
