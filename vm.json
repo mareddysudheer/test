@@ -76,30 +76,6 @@
                 
             ]
         },
-         {
-            "name": "[concat(parameters('computeSettings').wsVmName,'/workstation_setup2')]",
-            "type": "Microsoft.Compute/virtualMachines/extensions",
-            "location": "[parameters('computeSettings').location]",
-            "apiVersion": "2016-04-30-preview",
-            "properties": {
-                "publisher": "Microsoft.Compute",
-                "type": "CustomScriptExtension",
-                "typeHandlerVersion": "1.4",
-                
-                "settings": {
-                    "fileUris": [
-                        "https://raw.githubusercontent.com/sudheermareddy/test/master/workstaionsetup2.ps1"
-                    ],
-                           
-                   "commandToExecute": "[concat('powershell.exe -File workstaionsetup2.ps1', ' ', parameters('computeSettings').adminUsername, ' ', parameters('computeSettings').adminpassword, ' ', parameters('chefAutomatefqdn'), ' ', parameters('computeSettings').orguser,' ','splunkenterprisectdlw.westus.cloudapp.azure.com')]"
-                }
-            },
-            "dependsOn": [
-                "[concat('Microsoft.Compute/virtualMachines/', parameters('computeSettings').wsVmName)]",
-                "[concat('Microsoft.Compute/virtualMachines/', parameters('computeSettings').chefAutoVmName,'/extensions/automate_setup')]"
-            ]
-        },
-        
         {
             "type": "Microsoft.Compute/virtualMachines",
             "name": "[parameters('computeSettings').chefAutoVmName]",
