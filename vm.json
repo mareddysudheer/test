@@ -54,7 +54,7 @@
             }
         },
         {
-            "name": "[concat(parameters('computeSettings').wsVmName,'/workstation-extension')]",
+            "name": "[concat(parameters('computeSettings').wsVmName,'/workstation-setup')]",
             "type": "Microsoft.Compute/virtualMachines/extensions",
             "location": "[parameters('computeSettings').location]",
             "apiVersion": "2016-04-30-preview",
