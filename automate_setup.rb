@@ -72,5 +72,5 @@ usercreate.run_command
  orgcreate= Mixlib::ShellOut.new(" chef-server-ctl org-create #{@orguser} NewOrg  -a  #{@adminUsername} | tee /etc/opscode/#{@orguser}-validator.pem")
  orgcreate.run_command
 
- system("sed -i ' s/127.0.1.1       10.2.0.8 10/127.0.1.1       10.2.0.8/g /etc/hosts")
+ system("sed -i ' s/127.0.1.1       10.2.0.8 10/127.0.1.1       10.2.0.8/g' /etc/hosts")
  system("chef-server-ctl reconfigure")
