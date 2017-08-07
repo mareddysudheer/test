@@ -73,5 +73,5 @@ usercreate.run_command
  orgcreate.run_command
 
 # system("sed -i ' s/127.0.1.1       10.2.0.8 10/127.0.1.1       10.2.0.8/g' /etc/hosts")
-system("hostname 10.0.2.6") 
+system("hostname 10.2.0.8") 
 system("chef-server-ctl reconfigure")
