@@ -17,8 +17,8 @@ knife ssl  fetch --config c:\Users\chef-repo\.chef\knife.rb  --server-url https:
 git clone https://github.com/sysgain/IOT-ChefCookbooks.git C:/Users/cookbookstore
 cp -r C:\Users\cookbookstore\* C:\Users\chef-repo\cookbooks
 (Get-Content C:\Users\chef-repo\cookbooks\splunk-uf-install/recipes/default.rb) ` | %{ $_ -replace 'localhost',$splunkfqdn} ` | Set-Content C:\Users\chef-repo\cookbooks\splunk-uf-install/recipes/default.rb
-knife bootstrap windows winrm localhost --config c:\Users\chef-repo\.chef\knife.rb -x $adminusername  -P $adminPassword -N chefnode1 
+knife bootstrap windows winrm 10.2.0.4 --config c:\Users\chef-repo\.chef\knife.rb -x $adminusername  -P $adminPassword -N chefnode1 
 knife cookbook upload --config c:\Users\chef-repo\.chef\knife.rb --server-url https://$ChefServerFqdn/organizations/$organizationName/ splunk-uf-install compat_resource audit 
 knife node run_list add --config c:\users\chef-repo\.chef\knife.rb --server-url https://$ChefServerFqdn/organizations/$organizationName/ chefnode1 recipe[splunk-uf-install]
 knife node run_list add --config c:\users\chef-repo\.chef\knife.rb --server-url https://$ChefServerFqdn/organizations/$organizationName/ chefnode1 recipe[audit]
-chef-client
+knife winrm name:chefnode1 -a ipaddress -x ${adminUsername}  chef-client -P ${adminUsername}
