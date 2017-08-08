@@ -21,4 +21,4 @@ knife bootstrap windows winrm 10.2.0.4 --config c:\Users\chef-repo\.chef\knife.r
 knife cookbook upload --config c:\Users\chef-repo\.chef\knife.rb --server-url https://$ChefServerFqdn/organizations/$organizationName/ splunk-uf-install compat_resource audit 
 knife node run_list add --config c:\users\chef-repo\.chef\knife.rb --server-url https://$ChefServerFqdn/organizations/$organizationName/ chefnode1 recipe[splunk-uf-install]
 knife node run_list add --config c:\users\chef-repo\.chef\knife.rb --server-url https://$ChefServerFqdn/organizations/$organizationName/ chefnode1 recipe[audit]
-knife winrm name:chefnode1 -a ipaddress -x ${adminUsername}  chef-client -P ${adminUsername}
+knife winrm name:chefnode1 -a ipaddress -x ${adminUsername}  chef-client -P $adminPassword
