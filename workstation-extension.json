@@ -12,7 +12,7 @@
             "type": "string"
         },
           "wsfqdn": {
-                        "value": "[variables('wsfqdn')]"
+                          "type": "string"
           }                 
        },
     "variables": {},
