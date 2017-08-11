@@ -4,7 +4,7 @@ param(
 [string] $adminPassword = "$2",
 [string] $ChefServerFqdn = "$3",
 [string] $organizationName= "$4",
-[string] $splunkfqdn = "$5"
+[string] $splunkfqdn = "$5",
 [string] $wsfqdn= "$6"
 )
 Set-ExecutionPolicy -ExecutionPolicy RemoteSigned  -Force
