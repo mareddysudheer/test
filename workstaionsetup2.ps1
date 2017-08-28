@@ -5,7 +5,7 @@ param(
 [string] $ChefServerFqdn = "$3",
 [string] $organizationName= "$4",
 [string] $splunkfqdn = "$5",
-[string] $wsfqdn= "$6"
+#[string] $wsfqdn= "$6"
 )
 Set-ExecutionPolicy -ExecutionPolicy RemoteSigned  -Force
 cd C:\opscode\chefdk\bin
