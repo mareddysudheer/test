@@ -10,10 +10,7 @@
         },
         "chef-server-fqdn": {
             "type": "string"
-        },
-          "wsfqdn": {
-                          "type": "string"
-          }                 
+        }               
        },
     "variables": {},
     "resources": [
