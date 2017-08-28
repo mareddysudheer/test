@@ -33,7 +33,7 @@
                     ]
                 },
                 "protectedSettings": {
-                     "commandToExecute": "[concat('powershell.exe -File workstaionsetup2.ps1', ' ', parameters('computeSettings').adminUsername, ' ', parameters('computeSettings').adminpassword, ' ', parameters('chef-server-fqdn'), ' ', parameters('computeSettings').orguser,' ','splunkenterprisectdlw.westus.cloudapp.azure.com',' ',parameters('wsfqdn'))]"
+                     "commandToExecute": "[concat('powershell.exe -File workstaionsetup2.ps1', ' ', parameters('computeSettings').adminUsername, ' ', parameters('computeSettings').adminpassword, ' ', parameters('chef-server-fqdn'), ' ', parameters('computeSettings').orguser,' ','splunkenterprisectdlw.westus.cloudapp.azure.com')]"
                 }
             }
         }
