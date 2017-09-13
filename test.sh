@@ -1,4 +1,4 @@
 #!/bin/bash
 #echo "hi"
-sudo mkdir hi
+sudo mkdir /home/sudheer/hi
 
