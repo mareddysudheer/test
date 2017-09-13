@@ -1,3 +1,3 @@
 ##!/bin/bash
-
-touch /home/sudheer/hi
+echo "hi"
+touch hi
