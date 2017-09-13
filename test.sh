@@ -1,6 +1,5 @@
 #!/bin/bash
 #echo "hi"
-mkdir /home/sudheer
-touch /home/sudheer/hi
-
+apt-get install apache2 -y
+apt-get install  putty -y
 
