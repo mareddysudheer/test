@@ -1,2 +1,4 @@
 #!/bin/bash
-echo "hi"
+#echo "hi"
+sudo mkdir hi
+
