@@ -8,10 +8,6 @@ apt-get -y install curl
 #if [ ! -d /downloads ]; then
 #  mkdir /downloads
 #fi
-sudo apt-get install -y firewalld
-sudo firewall-cmd --zone=public --add-port=443/tcp --permanent
-sudo firewall-cmd --zone=public --add-port=80/tcp --permanent
-sudo firewall-cmd --reload
 # download the Chef Automate package
 #if [ ! -f /downloads/automate_1.6.99-1_amd64.deb ]; then
   echo "Downloading the Chef Automate package..."
