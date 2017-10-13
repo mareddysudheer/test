@@ -3,7 +3,9 @@ apt-get update
 apt-get -y install curl
 
 #chef_automate_fqdn=$1
+apt-get install -y firewalld
 firewall-cmd --zone=public --add-port=443/tcp --permanent
+firewall-cmd --zone=public --add-port=80/tcp --permanent
 firewall-cmd --reload
 # create staging directories
 if [ ! -d /drop ]; then
