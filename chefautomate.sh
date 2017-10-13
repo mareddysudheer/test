@@ -31,9 +31,9 @@ if [ ! $(which automate-ctl) ]; then
   automate-ctl reconfigure
 
   # wait for all services to come online
-  echo "Waiting for services..."
-  until (curl --insecure -D - https://localhost/api/_status) | grep "200 OK"; do sleep 1m && automate-ctl restart; done
-  while (curl --insecure https://localhost/api/_status) | grep "fail"; do sleep 15s; done
+ # echo "Waiting for services..."
+  #until (curl --insecure -D - https://localhost/api/_status) | grep "200 OK"; do sleep 1m && automate-ctl restart; done
+ # $while (curl --insecure https://localhost/api/_status) | grep "fail"; do sleep 15s; done
 
   # create an initial user
  echo "Creating delivery user..."
