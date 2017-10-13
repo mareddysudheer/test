@@ -3,7 +3,8 @@ apt-get update
 apt-get -y install curl
 
 #chef_automate_fqdn=$1
-
+firewall-cmd --zone=public --add-port=443/tcp --permanent
+firewall-cmd --reload
 # create staging directories
 if [ ! -d /drop ]; then
   mkdir /drop
@@ -39,7 +40,7 @@ fi
 # configure data collection
 chef-server-ctl set-secret data_collector token '93a49a4f2482c64126f7b6015e6b0f30284287ee4054ff8807fb63d9cbd1c506'
 chef-server-ctl restart nginx
-echo "data_collector['root_url'] = 'https://10.0.1.3/data-collector/v0/'" >> /etc/opscode/chef-server.rb
+echo "data_collector['root_url'] = 'https://10.0.0.2/data-collector/v0/'" >> /etc/opscode/chef-server.rb
 chef-server-ctl reconfigure
 
 # configure push jobs
