@@ -3,10 +3,7 @@ apt-get update
 apt-get -y install curl
 
 #chef_automate_fqdn=$1
-sudo apt-get install -y firewalld
-firewall-cmd --zone=public --add-port=443/tcp --permanent
-firewall-cmd --zone=public --add-port=80/tcp --permanent
-firewall-cmd --reload
+
 # create staging directories
 if [ ! -d /drop ]; then
   mkdir /drop
@@ -53,5 +50,8 @@ if [ ! $(which opscode-push-jobs-server-ctl) ]; then
   opscode-push-jobs-server-ctl reconfigure
 sudo  chef-server-ctl reconfigure
 fi
-
+sudo apt-get install -y firewalld
+firewall-cmd --zone=public --add-port=443/tcp --permanent
+firewall-cmd --zone=public --add-port=80/tcp --permanent
+firewall-cmd --reload
 echo "Your Chef server is ready!"
