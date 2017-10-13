@@ -22,7 +22,7 @@ if [ ! $(which automate-ctl) ]; then
 
   # run preflight check
   automate-ctl preflight-check
-fi
+
   # run setup
   automate-ctl setup --license /tmp/automate.license --key /tmp/chefuser.pem --server-url https://10.0.0.3/organizations/orguser --fqdn $(hostname) --enterprise default --configure --no-build-node
   automate-ctl reconfigure
@@ -36,7 +36,5 @@ fi
  echo "Creating delivery user..."
   automate-ctl create-user default chefuser --password Password@1234 --roles "admin"
 
-
+fi
 echo "Your Chef Automate server is ready!"
-#nginx['non_ssl_port'] = 9898
-#nginx['ssl_port'] = 449
