@@ -12,16 +12,16 @@ apt-get -y install curl
 # download the Chef Automate package
 #if [ ! -f /downloads/automate_1.6.99-1_amd64.deb ]; then
   echo "Downloading the Chef Automate package..."
-  wget -nv -P /root https://packages.chef.io/files/stable/automate/1.6.99/ubuntu/16.04/automate_1.6.99-1_amd64.deb
+ sudo wget -nv -P /root https://packages.chef.io/files/stable/automate/1.6.99/ubuntu/16.04/automate_1.6.99-1_amd64.deb
 #fi
 wget https://github.com/sudheermareddy/test/raw/master/automate.license -O /tmp/automate.license
 # install Chef Automate
 if [ ! $(which automate-ctl) ]; then
   echo "Installing Chef Automate..."
-  dpkg -i /root/automate_1.6.99-1_amd64.deb
+  sudo dpkg -i /root/automate_1.6.99-1_amd64.deb
 
   # run preflight check
-  automate-ctl preflight-check
+  sudo automate-ctl preflight-check
 
   # run setup
   automate-ctl setup --license /tmp/automate.license --key /tmp/chefuser.pem --server-url https://10.0.0.3/organizations/orguser --fqdn $(hostname) --enterprise default --configure --no-build-node
