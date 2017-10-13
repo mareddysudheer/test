@@ -1,7 +1,7 @@
 #!/bin/bash
 apt-get update
 apt-get -y install curl
-wget https://github.com/sudheermareddy/test/raw/master/automate.license -O /tmp/automate.license
+
 #chef_server_fqdn=$1
 
 # create downloads directory
@@ -14,7 +14,7 @@ if [ ! -f /downloads/automate_1.6.99-1_amd64.deb ]; then
   echo "Downloading the Chef Automate package..."
   wget -nv -P /downloads https://packages.chef.io/files/stable/automate/1.6.99/ubuntu/16.04/automate_1.6.99-1_amd64.deb
 fi
-
+wget https://github.com/sudheermareddy/test/raw/master/automate.license -O /tmp/automate.license
 # install Chef Automate
 if [ ! $(which automate-ctl) ]; then
   echo "Installing Chef Automate..."
@@ -35,6 +35,6 @@ if [ ! $(which automate-ctl) ]; then
   # create an initial user
  echo "Creating delivery user..."
   automate-ctl create-user default chefuser --password Password@1234 --roles "admin"
-
 fi
+
 echo "Your Chef Automate server is ready!"
