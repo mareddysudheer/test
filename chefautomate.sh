@@ -37,6 +37,6 @@ fi
   automate-ctl create-user default chefuser --password Password@1234 --roles "admin"
 
 
-echo "Your Chef Automate server is ready!
+echo "Your Chef Automate server is ready!"
 #nginx['non_ssl_port'] = 9898
 #nginx['ssl_port'] = 449
