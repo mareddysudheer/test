@@ -24,7 +24,7 @@ if [ ! $(which automate-ctl) ]; then
   automate-ctl preflight-check
 fi
   # run setup
-  automate-ctl setup --license /tmp/automate.license --key /etc/opscode/chefuser.pem --server-url https://10.0.0.3/organizations/orguser --fqdn $(hostname) --enterprise default --configure --no-build-node
+  automate-ctl setup --license /tmp/automate.license --key /tmp/chefuser.pem --server-url https://10.0.0.3/organizations/orguser --fqdn $(hostname) --enterprise default --configure --no-build-node
   automate-ctl reconfigure
 
   # wait for all services to come online
