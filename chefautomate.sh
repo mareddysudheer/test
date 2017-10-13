@@ -27,8 +27,8 @@ if [ ! $(which automate-ctl) ]; then
   sudo automate-ctl preflight-check
 
   # run setup
-  automate-ctl setup --license /tmp/automate.license --key /tmp/chefuser.pem --server-url https://10.0.0.3/organizations/orguser --fqdn $(hostname) --enterprise default --configure --no-build-node
-  automate-ctl reconfigure
+  sudo automate-ctl setup --license /tmp/automate.license --key /tmp/chefuser.pem --server-url https://10.0.0.3/organizations/orguser --fqdn $(hostname) --enterprise default --configure --no-build-node
+  sudo automate-ctl reconfigure
 
   # wait for all services to come online
  # echo "Waiting for services..."
@@ -37,7 +37,7 @@ if [ ! $(which automate-ctl) ]; then
 
   # create an initial user
  echo "Creating delivery user..."
-  automate-ctl create-user default chefuser --password Password@1234 --roles "admin"
+  sudo automate-ctl create-user default chefuser --password Password@1234 --roles "admin"
 fi
 
 echo "Your Chef Automate server is ready!"
