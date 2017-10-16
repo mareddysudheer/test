@@ -56,3 +56,4 @@ sudo firewall-cmd --zone=public --add-port=80/tcp --permanent
 sudo firewall-cmd --reload
  
 echo "Your Chef server is ready!"
+
