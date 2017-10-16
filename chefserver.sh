@@ -5,9 +5,6 @@ sudo apt-get -y install curl
 #chef_automate_fqdn=$1
  
 # create staging directories
-if [ ! -d /drop ]; then
-sudo mkdir /drop
-fi
 if [ ! -d /downloads ]; then
 sudo mkdir /downloads
 fi
