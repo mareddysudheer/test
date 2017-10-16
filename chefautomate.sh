@@ -33,7 +33,12 @@ if [ ! $(which automate-ctl) ]; then
 
   # create an initial user
  echo "Creating delivery user..."
- automate-ctl create-user default chefuser --password Password@1234 --roles "admin"
+ sudo automate-ctl create-user default chefuser --password Password@1234 --roles "admin"
 fi
-
+sudo apt-get install -y firewalld
+sudo firewall-cmd --zone=public --add-port=443/tcp --permanent
+sudo firewall-cmd --zone=public --add-port=80/tcp --permanent
+sudo firewall-cmd --zone=public --add-port=8989/tcp --permanent
+sudo firewall-cmd --reload
+sudo firewall-cmd --list-ports
 echo "Your Chef Automate server is ready!"
