@@ -1,16 +1,7 @@
 #!/bin/bash
 sudo apt-get update
 sudo apt-get -y install curl
-username=ubuntu
-pwd=Password@1234
 
-sudo echo -e "$pwd\n$pwd" | sudo passwd $username
-sudo file="/etc/ssh/sshd_config"
-sudo passwd_auth="yes"
-sudo cat $file | sed -e "s:\(PasswordAuthentication\).*:PasswordAuthentication $passwd_auth:" > $file.new
-sudo mv $file.new $file
-sudo service sshd restart
- 
 #chef_automate_fqdn=$1
  
 # create staging directories
@@ -62,6 +53,15 @@ sudo apt-get install -y firewalld
 sudo firewall-cmd --zone=public --add-port=443/tcp --permanent
 sudo firewall-cmd --zone=public --add-port=80/tcp --permanent
 sudo firewall-cmd --reload
+ username=ubuntu
+pwd=Password@1234
+
+sudo echo -e "$pwd\n$pwd" | sudo passwd $username
+sudo file="/etc/ssh/sshd_config"
+sudo passwd_auth="yes"
+sudo cat $file | sed -e "s:\(PasswordAuthentication\).*:PasswordAuthentication $passwd_auth:" > $file.new
+sudo mv $file.new $file
+sudo service sshd restart
  
 echo "Your Chef server is ready!"
 
