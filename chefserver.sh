@@ -36,14 +36,14 @@ fi
 # configure data collection
 sudo chef-server-ctl set-secret data_collector token '93a49a4f2482c64126f7b6015e6b0f30284287ee4054ff8807fb63d9cbd1c506'
 sudo chef-server-ctl restart nginx
-echo "data_collector['root_url'] = 'https://10.0.1.3/data-collector/v0/'" >> /etc/opscode/chef-server.rb
+sudo echo "data_collector['root_url'] = 'https://10.0.1.3/data-collector/v0/'" >> /etc/opscode/chef-server.rb
 sudo chef-server-ctl reconfigure
  
 # configure push jobs
 if [ ! $(which opscode-push-jobs-server-ctl) ]; then
 echo "Installing push jobs server..."
 sudo wget -nv -P /downloads https://packages.chef.io/files/stable/opscode-push-jobs-server/2.2.2/ubuntu/16.04/opscode-push-jobs-server_2.2.2-1_amd64.deb
-chef-server-ctl install opscode-push-jobs-server --path /downloads/opscode-push-jobs-server_2.2.2-1_amd64.deb
+sudo chef-server-ctl install opscode-push-jobs-server --path /downloads/opscode-push-jobs-server_2.2.2-1_amd64.deb
 sudo opscode-push-jobs-server-ctl reconfigure
 sudo chef-server-ctl reconfigure
 fi
