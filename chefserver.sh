@@ -4,17 +4,10 @@ sudo apt-get -y install curl
 username=ubuntu
 pwd=Password@1234
 
-############change username from default username ############
-sudo usermod -l $username ubuntu
-sudo usermod -d /home/$username -m $username
-
-############Enable password authentication############
 sudo echo -e "$pwd\n$pwd" | sudo passwd $username
-file="/etc/ssh/sshd_config"
-passwd_auth="yes"
-sudo cat $file \
-| sed -e "s:\(PasswordAuthentication\).*:PasswordAuthentication $passwd_auth:" \
-> $file.new
+sudo file="/etc/ssh/sshd_config"
+sudo passwd_auth="yes"
+sudo cat $file | sed -e "s:\(PasswordAuthentication\).*:PasswordAuthentication $passwd_auth:" > $file.new
 sudo mv $file.new $file
 sudo service sshd restart
  
@@ -52,15 +45,17 @@ fi
 # configure data collection
 sudo chef-server-ctl set-secret data_collector token '93a49a4f2482c64126f7b6015e6b0f30284287ee4054ff8807fb63d9cbd1c506'
 sudo chef-server-ctl restart nginx
-sudo echo "data_collector['root_url'] = 'https://10.0.0.3/data-collector/v0/'" >> /etc/opscode/chef-server.rb
-sudo chef-server-ctl reconfigure
- 
+
+ sudo chef-server-ctl reconfigure
+ sudo echo "data_collector['root_url'] = 'https://10.0.0.4/data-collector/v0/'" >> /etc/opscode/chef-server.rb
+ sudo hostname 10.0.0.3
 # configure push jobs
 if [ ! $(which opscode-push-jobs-server-ctl) ]; then
 echo "Installing push jobs server..."
 sudo wget -nv -P /downloads https://packages.chef.io/files/stable/opscode-push-jobs-server/2.2.2/ubuntu/16.04/opscode-push-jobs-server_2.2.2-1_amd64.deb
 sudo chef-server-ctl install opscode-push-jobs-server --path /downloads/opscode-push-jobs-server_2.2.2-1_amd64.deb
 sudo opscode-push-jobs-server-ctl reconfigure
+
 sudo chef-server-ctl reconfigure
 fi
 sudo apt-get install -y firewalld
