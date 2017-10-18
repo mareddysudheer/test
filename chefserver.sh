@@ -1,6 +1,22 @@
 #!/bin/bash
 sudo apt-get update
 sudo apt-get -y install curl
+username=ubuntu
+pwd=Password@1234
+
+############change username from default username ############
+sudo usermod -l $username ubuntu
+sudo usermod -d /home/$username -m $username
+
+############Enable password authentication############
+sudo echo -e "$pwd\n$pwd" | sudo passwd $username
+file="/etc/ssh/sshd_config"
+passwd_auth="yes"
+sudo cat $file \
+| sed -e "s:\(PasswordAuthentication\).*:PasswordAuthentication $passwd_auth:" \
+> $file.new
+sudo mv $file.new $file
+sudo service sshd restart
  
 #chef_automate_fqdn=$1
  
