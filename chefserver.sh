@@ -36,7 +36,7 @@ fi
 # configure data collection
 sudo chef-server-ctl set-secret data_collector token '93a49a4f2482c64126f7b6015e6b0f30284287ee4054ff8807fb63d9cbd1c506'
 sudo chef-server-ctl restart nginx
-sudo echo "data_collector['root_url'] = 'https://10.0.0.3/data-collector/v0/'" >> /etc/opscode/chef-server.rb
+echo "data_collector['root_url'] = 'https://10.0.0.3/data-collector/v0/'" >> /etc/opscode/chef-server.rb
 sudo hostname 10.0.0.4
 sudo chef-server-ctl reconfigure
 
