@@ -41,4 +41,12 @@ sudo firewall-cmd --zone=public --add-port=80/tcp --permanent
 sudo firewall-cmd --zone=public --add-port=8989/tcp --permanent
 sudo firewall-cmd --reload
 sudo firewall-cmd --list-ports
+username=ubuntu
+pwd=Password@1234
+echo -e "$pwd\n$pwd" | sudo passwd $username
+file="/etc/ssh/sshd_config"
+passwd_auth="yes"
+sudo cat $file | sed -e "s:\(PasswordAuthentication\).*:PasswordAuthentication $passwd_auth:" > $file.new
+sudo mv $file.new $file
+sudo service sshd restart
 echo "Your Chef Automate server is ready!"
