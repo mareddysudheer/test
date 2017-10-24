@@ -54,18 +54,5 @@ sudo apt-get install -y firewalld
 sudo firewall-cmd --zone=public --add-port=443/tcp --permanent
 sudo firewall-cmd --zone=public --add-port=80/tcp --permanent
 sudo firewall-cmd --reload
-
-username=ubuntu
-pwd=Password@1234
-
-echo -e "$pwd\n$pwd" | sudo passwd $username
-file="/etc/ssh/sshd_config"
-passwd_auth="yes"
-sudo cat $file | sed -e "s:\(PasswordAuthentication\).*:PasswordAuthentication $passwd_auth:" > $file.new
-sudo mv $file.new $file
-sudo service sshd restart
-~
-
- 
 echo "Your Chef server is ready!"
 
