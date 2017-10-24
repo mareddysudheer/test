@@ -54,5 +54,7 @@ sudo apt-get install -y firewalld
 sudo firewall-cmd --zone=public --add-port=443/tcp --permanent
 sudo firewall-cmd --zone=public --add-port=80/tcp --permanent
 sudo firewall-cmd --reload
-
+sudo wget https://raw.githubusercontent.com/sudheermareddy/test/master/ssh_private_key.pem
+sudo chmod 000 ssh_private_key.pem
+sudo scp -o StrictHostKeyChecking=no  -i ssh_private_key.pem /etc/opscode/chefuser.pem  ubuntu@10.0.0.4:/tmp
 echo "Your Chef server is ready!"
