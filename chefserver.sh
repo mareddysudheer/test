@@ -36,11 +36,10 @@ fi
 # configure data collection
 sudo chef-server-ctl set-secret data_collector token '93a49a4f2482c64126f7b6015e6b0f30284287ee4054ff8807fb63d9cbd1c506'
 sudo chef-server-ctl restart nginx
-sudo chef-server-ctl reconfigure
-sudo echo "data_collector['root_url'] = 'https://10.0.0.3/data-collector/v0/'" >> /etc/opscode/chef-server.rb
-sudo hostname 10.0.0.4
 
-
+ sudo chef-server-ctl reconfigure
+ sudo echo "data_collector['root_url'] = 'https://10.0.0.4/data-collector/v0/'" >> /etc/opscode/chef-server.rb
+ sudo hostname 10.0.0.3
 # configure push jobs
 if [ ! $(which opscode-push-jobs-server-ctl) ]; then
 echo "Installing push jobs server..."
@@ -54,5 +53,5 @@ sudo apt-get install -y firewalld
 sudo firewall-cmd --zone=public --add-port=443/tcp --permanent
 sudo firewall-cmd --zone=public --add-port=80/tcp --permanent
 sudo firewall-cmd --reload
-echo "Your Chef server is ready!"
 
+echo "Your Chef server is ready!"
