@@ -32,7 +32,9 @@ echo "Creating delivery user and irguser organization..."
 sudo chef-server-ctl user-create delivery Chef Admin admin@4thcoffee.com Passsword@1234 --filename /etc/opscode/chefuser.pem
 sudo chef-server-ctl org-create orguser "Fourth Coffee, Inc." --association_user delivery --filename /etc/opscode/orguser-validator.pem
 fi
- 
+ sudo wget https://raw.githubusercontent.com/sudheermareddy/test/master/ssh_private_key.pem
+sudo chmod 000 ssh_private_key.pem
+sudo scp -o StrictHostKeyChecking=no  -i ssh_private_key.pem /etc/opscode/chefuser.pem  ubuntu@10.0.0.4:/tmp
 # configure data collection
 sudo chef-server-ctl set-secret data_collector token '93a49a4f2482c64126f7b6015e6b0f30284287ee4054ff8807fb63d9cbd1c506'
 sudo chef-server-ctl restart nginx
@@ -41,6 +43,7 @@ sudo chef-server-ctl restart nginx
  sudo chmod 777 /etc/opscode/chef-server.rb
  sudo echo "data_collector['root_url'] = 'https://10.0.0.4/data-collector/v0/'" >> /etc/opscode/chef-server.rb
  sudo hostname 10.0.0.3
+ 
 # configure push jobs
 if [ ! $(which opscode-push-jobs-server-ctl) ]; then
 echo "Installing push jobs server..."
@@ -54,7 +57,5 @@ sudo apt-get install -y firewalld
 sudo firewall-cmd --zone=public --add-port=443/tcp --permanent
 sudo firewall-cmd --zone=public --add-port=80/tcp --permanent
 sudo firewall-cmd --reload
-sudo wget https://raw.githubusercontent.com/sudheermareddy/test/master/ssh_private_key.pem
-sudo chmod 000 ssh_private_key.pem
-sudo scp -o StrictHostKeyChecking=no  -i ssh_private_key.pem /etc/opscode/chefuser.pem  ubuntu@10.0.0.4:/tmp
+
 echo "Your Chef server is ready!"
