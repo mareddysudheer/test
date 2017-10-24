@@ -38,7 +38,8 @@ sudo chef-server-ctl set-secret data_collector token '93a49a4f2482c64126f7b6015e
 sudo chef-server-ctl restart nginx
 
  sudo chef-server-ctl reconfigure
- echo "data_collector['root_url'] = 'https://10.0.0.4/data-collector/v0/'" >> /etc/opscode/chef-server.rb
+ sudo chmod 777 /etc/opscode/chef-server.rb
+ sudo echo "data_collector['root_url'] = 'https://10.0.0.4/data-collector/v0/'" >> /etc/opscode/chef-server.rb
  sudo hostname 10.0.0.3
 # configure push jobs
 if [ ! $(which opscode-push-jobs-server-ctl) ]; then
