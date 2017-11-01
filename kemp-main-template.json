@@ -1,14 +1,9 @@
 {
     "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
-    "parameters": {
-    "adminUsername": {
-         "type": "string"
-     },
-      "adminPassword": {
-         "type": "string"
-     }
-    },
+    "parameters": {"adminUsername": {
+        "type": "string"
+    }},
     "variables": {
         "apiVersion": {
             "compute": {
@@ -36,7 +31,8 @@
         "webnicName": "[concat(variables('webvmName'),'-Nic')]",
         "secadminUsername": "kmpnimda",
         "secadminPassword": "K3mp$uper$3cr3t&",
-        
+        "adminUsername": "bal",
+        "adminPassword": "Kemp@testdrive1",
         "ostype": "linux",
         "vmSize": "Standard_A1",
         "addressPrefix": "10.0.0.0/24",
@@ -205,7 +201,7 @@
                 },
                 "osProfile": {
                     "computerName": "[variables('vmName')]",
-                    "adminUsername": "[variables('adminUsername')]",
+                    "adminUsername": "[parameters('adminUsername')]",
                     "adminPassword": "[variables('adminPassword')]"
                 },
                 "storageProfile": {
@@ -382,7 +378,7 @@
         },
         "User Name": {
             "type": "string",
-            "value": "[variables('adminUsername')]"
+            "value": "[parameters('adminUsername')]"
         },
         "Password": {
             "type": "string",
