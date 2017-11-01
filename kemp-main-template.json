@@ -31,7 +31,7 @@
         "webnicName": "[concat(variables('webvmName'),'-Nic')]",
         "secadminUsername": "kmpnimda",
         "secadminPassword": "K3mp$uper$3cr3t&",
-        "adminUsername": "bal",
+        
         "adminPassword": "Kemp@testdrive1",
         "ostype": "linux",
         "vmSize": "Standard_A1",
