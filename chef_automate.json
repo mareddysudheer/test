@@ -13,7 +13,7 @@
             "wsVmName": "chefworkstation",
             "chefAutoVmName": "chefautomate",
             "imagePublisher": "chef-software",
-            "imageOffer": "chef-automate",
+            "imageOffer": "chef-automate-vm-image",
             "imageSKU": "byol",
             "imageVersion": "latest",
             "storageAccountType": "Standard_LRS",
