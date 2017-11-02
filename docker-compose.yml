@@ -1,0 +1,160 @@
+version: "2.1"
+services:
+  smd-ui:
+    depends_on:
+    - strato
+    - bloch
+    environment:
+    - NODE_NAME=#INT-IP
+    - STRATO_DOC_URL=http://#EXT-IP/docs/?url=/strato-api/eth/v1.2/swagger.json
+    - STRATO_GS_MODE=0
+    - STRATO_URL=http://#EXT-IP/strato-api/eth/v1.2
+    - BLOC_DOC_URL=http://#EXT-IP/docs/?url=/bloc/v2.1/swagger.json
+    - BLOC_URL=http://#EXT-IP/bloc/v2.1
+    - CIRRUS_URL=http://#EXT-IP/cirrus/search
+    image: repo.blockapps.net:5000/blockapps-repo/silo-smd-ui:b8d3708
+    restart: always
+  bloch:
+    depends_on:
+    - strato
+    - postgres
+    environment:
+    - pguser=postgres
+    - ssl=${ssl}
+    - stratoHost=#EXT-IP
+    - stratourl=http://#EXT-IP/strato-api/eth/v1.2
+    - cirrusurl=nginx/cirrus
+    - pghost=#INT-IP
+    - pgpasswd=api
+    image: repo.blockapps.net:5000/blockapps-repo/silo-bloch:76a5500
+    ports:
+    - 10001:8000
+    restart: always
+  redis:
+    command: [redis-server, --appendonly, "yes"]
+    image: redis:3.2
+    ports:
+    - 6379:6379
+    restart: always
+  cirrus:
+    environment:
+    - zookeeper_conn=#INT-IP:2181/
+    - postgres_db=cirrus
+    - postgres_host=#INT-IP
+    - postgres_password=api
+    - postgres_port=5432
+    - postgres_user=postgres
+    - stratourl=http://#INT-IP/strato-api
+    image: repo.blockapps.net:5000/blockapps-repo/silo-cirrus:3eb741f
+    links:
+    - strato:strato
+    - postgres-cirrus:postgres
+    restart: always
+  strato:
+    depends_on:
+    - zookeeper
+    - kafka
+    - postgres
+    - redis
+    environment:
+    - statsPrefix=${statsPrefix}
+    - statsSuffix=${statsSuffix}
+    - useSyncMode=${useSyncMode}
+    - bootnode=${bootnode}
+    - debugFail=${debugFail}
+    - genesis=${genesis}
+    - statsFlush=${statsFlush}
+    - statsHost=${statsHost}
+    - statsPort=${statsPort}
+    - blockTime=${blockTime}
+    - genesisBlock=${genesisBlock}
+    - miningThreads=${miningThreads}
+    - lazyBlocks=${lazyBlocks}
+    - minBlockDifficulty=${minBlockDifficulty}
+    - mineBlocks=${mineBlocksds:-true}
+    - statsEnable=${statsEnable}
+    - evmDebugMode=${evmDebugMode}
+    - evmTraceMode=${evmTraceMode}
+    - noMinPeers=${noMinPeers:-false}
+    - redisBDBNumber=${redisBDBNumber}
+    - addBootnodes=${addBootnodes}
+    - miningAlgorithm=${miningAlgorithm}
+    - networkID=${networkID}
+    image: repo.blockapps.net:5000/blockapps-repo/silo-strato:db8e7ff
+    links:
+    - zookeeper
+    - kafka
+    - postgres
+    - redis
+    ports:
+    - 30303:30303
+    - 30303:30303/udp
+    - 33000:3000
+    restart: always
+  postgres-cirrus:
+    environment:
+    - PG_ENV_POSTGRES_USER=postgres
+    - POSTGRES_DB=cirrus
+    - POSTGRES_USER=postgres
+    - POSTGRES_PASSWORD=api
+    - PG_ENV_POSTGRES_DB=cirrus
+    image: postgres:9.6
+    ports:
+    - 5432:5432
+  postgrest:
+    environment:
+    - PG_ENV_POSTGRES_DB=cirrus
+    - PG_ENV_POSTGRES_HOST=postgres-cirrus
+    - PG_ENV_POSTGRES_PASSWORD=api
+    - PG_ENV_POSTGRES_USER=postgres
+    - PG_PORT_5432_TCP_PORT=5432
+    image: repo.blockapps.net:5000/blockapps-repo/silo-postgrest:71b9977
+    ports:
+    - 3001:3001
+    restart: always
+  postgres:
+    image: repo.blockapps.net:5000/blockapps-repo/silo-postgres:750b87e
+    restart: always
+  nginx:
+    depends_on:
+    - bloch
+    - cirrus
+    - postgrest
+    - smd-ui
+    - strato
+    environment:
+    - ssl=${ssl}
+    - uiPassword=${uiPassword}
+    image: repo.blockapps.net:5000/blockapps-repo/silo-nginx:41b3a5d
+    ports:
+    - 443:443
+    - 80:80
+    restart: always
+  zookeeper:
+    environment:
+    - ZOO_MY_ID=1
+    image: zookeeper:3.4.9
+    ports:
+    - 2181:2181
+    restart: always
+  blockapps-docs:
+    environment:
+    - API_URL=/strato-api/eth/v1.2/swagger.json
+    image: repo.blockapps.net:5000/blockapps-repo/silo-blockapps-docs:71ca83a
+    ports:
+    - 8080:8080
+    restart: always
+  kafka:
+    environment:
+    - KAFKA_ADVERTISED_HOST_NAME=kafka
+    - KAFKA_ADVERTISED_PORT=9092
+    - KAFKA_DELETE_TOPIC_ENABLE=true
+    - KAFKA_LOG_CLEANER_ENABLE=false
+    - KAFKA_LOG_RETENTION_HOURS=2147483647
+    - KAFKA_ZOOKEEPER_CONNECT=zookeeper:2181
+    image: repo.blockapps.net:5000/blockapps-repo/silo-kafka:4a1bed5
+    links:
+    - zookeeper
+    ports:
+    - 9092:9092
+    restart: always
