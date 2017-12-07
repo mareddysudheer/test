@@ -24,4 +24,5 @@ sudo echo "puppet.master.com" > /etc/hostname
 sudo /home/ubuntu/puppet-enterprise-2017.3.2-ubuntu-16.04-amd64/puppet-enterprise-installer -c /home/ubuntu/puppet-enterprise-2017.3.2-ubuntu-16.04-amd64/conf.d/pe.conf
 sudo puppet agent -t
 echo " Now Puppet enterprise is ready"
+sudo puppet module install puppetlabs-ntp
 exit 0
