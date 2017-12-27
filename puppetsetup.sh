@@ -24,6 +24,16 @@ sudo echo "puppet.master.com" > /etc/hostname
 sudo /home/ubuntu/puppet-enterprise-2017.3.2-ubuntu-16.04-amd64/puppet-enterprise-installer -c /home/ubuntu/puppet-enterprise-2017.3.2-ubuntu-16.04-amd64/conf.d/pe.conf
 sudo puppet agent -t
 sleep 20
-echo " Now Puppet enterprise is ready"
+
 sudo puppet module install puppetlabs-ntp
+while :
+do
+  curl -k -s https://localhost:8140/status/v1/services | python -c 'import json,sys;obj=json.load(sys.stdin);sys.exit(0) if (obj["pe-master"]["state"] == "running") else sys.exit(1);'
+  if [[ $? == 0 ]]; then
+    exit
+  fi
+  sleep 5
+done
+sleep 3m
+echo " Puppet enterprise is ready"
 exit 0
