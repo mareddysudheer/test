@@ -30,8 +30,8 @@ orguser=$6
 #validatorkey=`cat /tmp/validatorkey.txt`
 #userkey=`cat /tmp/userkey.txt`
 ##Chef-Automate Upgrade
-chef-marketplace-ctl upgrade -y
-sudo chef-server-ctl reconfigure
+#chef-marketplace-ctl upgrade -y
+#sudo chef-server-ctl reconfigure
 ##Creating user for Chef Web UI
 sudo automate-ctl create-user default $1 --password $5
 sudo chef-server-ctl user-create $1 $2 $3 $4 $5 > /etc/opscode/$1.pem
