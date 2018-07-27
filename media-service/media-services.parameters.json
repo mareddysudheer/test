@@ -1,0 +1,24 @@
+{
+    "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "location": {
+            "value": "westus"
+        },
+        "mediaServiceApiVersion": {
+            "value": "2015-10-01"
+        },
+        "tag": {
+            "value": {
+                "key1": "key",
+                "value1": "value"
+            }
+        },
+        "mediaServicesName": {
+            "value": "GEN-UNIQUE"
+        },
+        "storageAccountName": {
+            "value": "GEN-UNIQUE"
+        }
+    }
+}

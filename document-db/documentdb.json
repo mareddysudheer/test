@@ -1,0 +1,124 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "documentDatabaseAccountName": {
+            "type": "string",
+            "metadata": {
+                "description": "Name must contain only lowercase alphanumeric characters"
+            }
+        },
+        "documentDBApiVersion": {
+            "type": "string",
+            "defaultValue": "2015-04-08",
+            "allowedValues": [
+                "2014-04-01",
+                "2015-04-08"
+            ]
+        },
+        "maxIntervalInSeconds": {
+            "type": "int",
+            "defaultValue": 5,
+            "maxValue": 600,
+            "minValue": 5,
+            "metadata": {
+                "description": "When consistencyLevel is set to BoundedStaleness, then this value is required, else it can be ignored."
+            }
+        },
+        "maxStalenessPrefix": {
+            "type": "int",
+            "defaultValue": 100,
+            "maxValue": 1000,
+            "minValue": 10,
+            "metadata": {
+                "description": "When consistencyLevel is set to BoundedStaleness, then this value is required, else it can be ignored."
+            }
+        },
+        "defaultConsistencyLevel": {
+            "type": "string",
+            "defaultValue": "Session",
+            "allowedValues": [
+                "Strong",
+                "Session",
+                "Eventual",
+                "BoundedStaleness"
+            ],
+            "metadata": {
+                "description": "The DocumentDB default consistency level for this account."
+            }
+        },
+        "location": {
+            "type": "string",
+            "defaultValue": "westus",
+            "allowedValues": [
+                "Brazil South",
+                "brazilsouth",
+                "East Asia",
+                "eastasia",
+                "East US",
+                "eastus",
+                "Japan East",
+                "japaneast",
+                "Japan West",
+                "japanwest",
+                "North Central US",
+                "northcentralus",
+                "North Europe",
+                "northeurope",
+                "South Central US",
+                "southcentralus",
+                "West Europe",
+                "westeurope",
+                "West US",
+                "westus",
+                "Southeast Asia",
+                "southeastasia",
+                "Central US",
+                "centralus",
+                "East US 2",
+                "eastus2"
+            ],
+            "metadata": {
+                "description": "Deployment Location Hint: Use lowercase for creating ipaddress"
+            }
+        },
+        "tag": {
+            "type": "object",
+            "defaultValue": {
+                "value1": "value",
+                "key1": "key"
+            }
+        }
+    },
+    "variables": {},
+    "resources": [
+        {
+            "type": "Microsoft.DocumentDB/databaseAccounts",
+            "name": "[parameters('documentDatabaseAccountName')]",
+            "apiVersion": "[parameters('documentDBApiVersion')]",
+            "location": "[parameters('location')]",
+            "tags": {
+                "[parameters('tag').key1]": "[parameters('tag').value1]"
+            },
+            "properties": {
+                "name": "[parameters('documentDatabaseAccountName')]",
+                "databaseAccountOfferType": "Standard",
+                "consistencyPolicy": {
+                    "defaultConsistencyLevel": "[parameters('defaultConsistencyLevel')]",
+                    "maxIntervalInSeconds": "[parameters('maxIntervalInSeconds')]",
+                    "maxStalenessPrefix": "[parameters('maxStalenessPrefix')]"
+                }
+            }
+        }
+    ],
+    "outputs": {
+        "documentdb_host": {
+            "type": "string",
+            "value": "[concat('https://',parameters('documentDatabaseAccountName'),'.documents.azure.com:443/')]"
+        },
+        "documentdbKey": {
+            "value": "[listKeys(resourceId('Microsoft.DocumentDB/databaseAccounts', parameters('documentDatabaseAccountName')), '2015-04-08').primaryMasterKey]",
+            "type": "string"
+        }
+    }
+}

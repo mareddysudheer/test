@@ -1,0 +1,42 @@
+{
+    "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "serversName": {
+            "value": "GEN-UNIQUE"
+        },
+        "apiVersion": {
+            "value": "2014-04-01-preview"
+        },
+        "adminLogin": {
+            "value": "sysgain"
+        },
+        "adminLoginPassword": {
+            "value": "GEN-PASSWORD"
+        },
+        "databasesName": {
+            "value": "db123"
+        },
+        "tierForSize": {
+            "value": "S2"
+        },
+        "firewallRulesName": {
+            "value": "AllowIPs"
+        },
+        "startIpAddress": {
+            "value": "0.0.0.0"
+        },
+        "endIpAddress": {
+            "value": "0.0.0.0"
+        },
+        "location": {
+            "value": "westus"
+        },
+        "tag": {
+            "value": {
+                "key1": "key",
+                "value1": "value"
+            }
+        }
+    }
+}

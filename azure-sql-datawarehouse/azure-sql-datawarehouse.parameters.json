@@ -1,0 +1,30 @@
+{
+    "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "location": {
+            "value": "southcentralus"
+        },
+        "apiVersion": {
+            "value": "2014-04-01-preview"
+        },
+        "sqlDWServerName": {
+            "value": "GEN-UNIQUE"
+        },
+        "sqlDWDBAdminName": {
+            "value": "sysgainadmin"
+        },
+        "sqlDWAdminPassword": {
+            "value": "GEN-PASSWORD"
+        },
+        "sqlDWDBName": {
+            "value": "testdwdb"
+        },
+        "startIpAddress": {
+            "value": "0.0.0.0"
+        },
+        "endIpAddress": {
+            "value": "0.0.0.0"
+        }
+    }
+}

@@ -1,0 +1,30 @@
+{
+    "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "documentDatabaseAccountName": {
+            "value": "GEN-UNIQUE"
+        },
+        "documentDBApiVersion": {
+            "value": "2015-04-08"
+        },
+        "maxIntervalInSeconds": {
+            "value": 5
+        },
+        "maxStalenessPrefix": {
+            "value": 100
+        },
+        "defaultConsistencyLevel": {
+            "value": "Session"
+        },
+        "location": {
+            "value": "westus"
+        },
+        "tag": {
+            "value": {
+                "key": "key",
+                "value": "value"
+            }
+        }
+    }
+}

@@ -1,0 +1,216 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "serversName": {
+            "type": "string",
+            "metadata": {
+                "description": "Name must contain only lowercase alphanumeric characters"
+            }
+        },
+        "apiVersion": {
+            "type": "string",
+            "defaultValue": "2014-04-01-preview",
+            "allowedValues": [
+                "2014-04-01-preview"
+            ],
+            "metadata": {
+                "description": "API Version of Azure SQL DB Server"
+            }
+        },
+        "adminLogin": {
+            "type": "string",
+            "metadata": {
+                "description": "Azure SQL DB server administrator login name"
+            }
+        },
+        "adminLoginPassword": {
+            "type": "securestring",
+            "metadata": {
+                "description": "Azure SQL DB server administrator login password"
+            }
+        },
+        "databasesName": {
+            "defaultValue": "db123",
+            "type": "string",
+            "metadata": {
+                "description": "Name must contain only lowercase alphanumeric characters"
+            }
+        },
+        "tierForSize": {
+            "type": "string",
+            "defaultValue": "S2",
+            "allowedValues": [
+                "Basic",
+                "S0",
+                "S1",
+                "S2",
+                "S3",
+                "P1",
+                "P2",
+                "P3"
+            ],
+            "metadata": {
+                "description": "The Sizes corresponding to the Tier level for Edition.  Basic = 2GB, S0 = 20GB, S1 = 50GB, S2 = 150GB, S3 = 250GB, P1 = 300GB, P2 = 400GB, P3 = 500GB"
+            }
+        },
+        "firewallRulesName": {
+            "type": "string",
+            "defaultValue": "AllowIPs"
+        },
+        "startIpAddress": {
+            "type": "string",
+            "defaultValue": "0.0.0.0"
+        },
+        "endIpAddress": {
+            "type": "string",
+            "defaultValue": "0.0.0.0"
+        },
+        "location": {
+            "type": "string",
+            "defaultValue": "westus",
+            "allowedValues": [
+                "Brazil South",
+                "brazilsouth",
+                "East Asia",
+                "eastasia",
+                "East US",
+                "eastus",
+                "Japan East",
+                "japaneast",
+                "Japan West",
+                "japanwest",
+                "North Central US",
+                "northcentralus",
+                "North Europe",
+                "northeurope",
+                "South Central US",
+                "southcentralus",
+                "West Europe",
+                "westeurope",
+                "West US",
+                "westus",
+                "Southeast Asia",
+                "southeastasia",
+                "Central US",
+                "centralus",
+                "East US 2",
+                "eastus2"
+            ],
+            "metadata": {
+                "description": "Deployment Location Hint: Use lowercase for creating ipaddress"
+            }
+        },
+        "tag": {
+            "type": "object",
+            "defaultValue": {
+                "key1": "key",
+                "value1": "value"
+            },
+            "metadata": {
+                "description": "Tag Values"
+            }
+        }
+    },
+    "variables": {
+        "rpShared": "910B4FCB-8A29-4C3E-958F-F7BA794388B2",
+        "rpBasic": "DD6D99BB-F193-4EC1-86F2-43D3BCCBC49C",
+        "rpS0": "F1173C43-91BD-4AAA-973C-54E79E15235B",
+        "rpS1": "1B1EBD4D-D903-4BAA-97F9-4EA675F5E928",
+        "rpS2": "455330E1-00CD-488B-B5FA-177C226F28B7",
+        "rpS3": "789681B8-CA10-4EB0-BDF2-E0B050601B40",
+        "rpP1": "7203483A-C4FB-4304-9E9F-17C71C904F5D",
+        "rpP2": "A7D1B92D-C987-4375-B54D-2B1D0E0F5BB0",
+        "rpP3": "A7C4C615-CFB1-464B-B252-925BE0A19446",
+        "requestedSrvcObjId": "[variables(concat('rp',parameters('tierForSize')))]",
+        "ediBasic": "Basic",
+        "ediS0": "Standard",
+        "ediS1": "Standard",
+        "ediS2": "Standard",
+        "ediS3": "Standard",
+        "ediP1": "Premium",
+        "ediP2": "Premium",
+        "ediP3": "Premium",
+        "databaseEdition": "[variables(concat('edi',parameters('tierForSize')))]",
+        "size_Basic": "2147483648",
+        "size_S0": "21474836480",
+        "size_S1": "53687091200",
+        "size_S2": "161061273600",
+        "size_S3": "268435456000",
+        "size_P1": "322122547200",
+        "size_P2": "429496729600",
+        "size_P3": "536870912000",
+        "maxSizeBytes": "[variables(concat('size_',parameters('tierForSize')))]"
+    },
+    "resources": [
+        {
+            "type": "Microsoft.Sql/servers",
+            "kind": "v12.0",
+            "name": "[parameters('serversName')]",
+            "apiVersion": "[parameters('apiVersion')]",
+            "location": "[parameters('location')]",
+            "tags": {
+                "[parameters('tag').key1]": "[parameters('tag').value1]"
+            },
+            "properties": {
+                "administratorLogin": "[parameters('adminLogin')]",
+                "administratorLoginPassword": "[parameters('adminLoginPassword')]",
+                "version": "12.0"
+            }
+        },
+        {
+            "type": "Microsoft.Sql/servers/databases",
+            "kind": "v12.0",
+            "name": "[concat(parameters('serversName'),'/',parameters('databasesName'))]",
+            "apiVersion": "[parameters('apiVersion')]",
+            "location": "[parameters('location')]",
+            "properties": {
+                "edition": "[variables('databaseEdition')]",
+                "serviceLevelObjective": "[parameters('tierForSize')]",
+                "collation": "SQL_Latin1_General_CP1_CI_AS",
+                "maxSizeBytes": "[variables('maxSizeBytes')]",
+                "requestedServiceObjectiveId": "[variables('requestedSrvcObjId')]",
+                "defaultSecondaryLocation": "East US"
+            },
+            "dependsOn": [
+                "[resourceId('Microsoft.Sql/servers', parameters('serversName'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Sql/servers/firewallrules",
+            "kind": "v12.0",
+            "name": "[concat(parameters('serversName'),'/',parameters('firewallRulesName'))]",
+            "apiVersion": "[parameters('apiVersion')]",
+            "location": "[parameters('location')]",
+            "properties": {
+                "startIpAddress": "[parameters('startIpAddress')]",
+                "endIpAddress": "[parameters('endIpAddress')]"
+            },
+            "dependsOn": [
+                "[resourceId('Microsoft.Sql/servers', parameters('serversName'))]"
+            ]
+        }
+    ],
+    "outputs": {
+        "databaseServerURL": {
+            "type": "string",
+            "value": "[concat(parameters('serversName'),'.database.windows.net')]"
+        },
+        "administratorLogin": {
+            "type": "string",
+            "value": "[parameters('adminLogin')]"
+        },
+        "administratorLoginPassword": {
+            "type": "string",
+            "value": "[parameters('adminLoginPassword')]"
+        },
+        "sqlServerName": {
+            "type": "string",
+            "value": "[parameters('serversName')]"
+        },
+        "sqldbName": {
+            "type": "string",
+            "value": "[concat(parameters('serversName'),'/',parameters('databasesName'))]"
+        }
+    }
+}

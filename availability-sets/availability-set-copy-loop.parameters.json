@@ -1,0 +1,24 @@
+{
+    "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "location": {
+            "value": "westus"
+        },
+        "availabilitySetName": {
+            "value": "avset"
+        },
+        "availabilitySetApiVersion": {
+            "value": "2015-06-15"
+        },
+        "count": {
+            "value": 2
+        },
+        "tag": {
+            "value": {
+                "key1": "key",
+                "value1": "value"
+            }
+        }
+    }
+}

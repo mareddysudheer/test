@@ -1,0 +1,136 @@
+{
+    "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "location": {
+            "type": "string",
+            "defaultValue": "southcentralus",
+            "allowedValues": [
+                "Australia East",
+                "australiaeast",
+                "Australia Southeast",
+                "australiasoutheast",
+                "Brazil South",
+                "brazilsouth",
+                "Canada East",
+                "canadaeast",
+                "Canada Central",
+                "canadacentral",
+                "East Asia",
+                "eastasia",
+                "East US",
+                "eastus",
+                "Japan East",
+                "japaneast",
+                "Japan West",
+                "japanwest",
+                "North Central US",
+                "northcentralus",
+                "North Europe",
+                "northeurope",
+                "South Central US",
+                "southcentralus",
+                "UK South",
+                "uksouth",
+                "ukwest",
+                "UK West",
+                "West Central US",
+                "westcentralus",
+                "West Europe",
+                "westeurope",
+                "West US",
+                "westus",
+                "Southeast Asia",
+                "southeastasia",
+                "Central US",
+                "centralus",
+                "East US 2",
+                "eastus2"
+            ],
+            "metadata": {
+                "description": "Deployment Location Hint: Use lowercase for creating ipaddress"
+            }
+        },
+        "apiVersion": {
+            "type": "string",
+            "defaultValue": "2014-04-01-preview",
+            "allowedValues": [
+                "2014-04-01-preview"
+            ]
+        },
+        "sqlDWServerName": {
+            "type": "string",
+            "metadata": {
+                "description": "SQL Datawarehouse Server Name, should be a unique name"
+            }
+        },
+        "sqlDWDBAdminName": {
+            "type": "string",
+            "metadata": {
+                "description": "SQL Datawarehouse Admin Name"
+            }
+        },
+        "sqlDWAdminPassword": {
+            "type": "securestring",
+            "metadata": {
+                "description": "SQL Datawarehouse Admin password. Ex: Testadmin@123"
+            }
+        },
+        "sqlDWDBName": {
+            "type": "string",
+            "defaultValue": "testdwdb",
+            "metadata": {
+                "description": "SQL Datawarehouse Database Name"
+            }
+        },
+        "startIpAddress": {
+            "type": "string",
+            "defaultValue": "0.0.0.0"
+        },
+        "endIpAddress": {
+            "type": "string",
+            "defaultValue": "0.0.0.0"
+        }
+    },
+    "resources": [
+        {
+            "name": "[parameters('sqlDWServerName')]",
+            "type": "Microsoft.Sql/servers",
+            "location": "[parameters('location')]",
+            "apiVersion": "[parameters('apiVersion')]",
+            "properties": {
+                "administratorLogin": "[parameters('sqlDWDBAdminName')]",
+                "administratorLoginPassword": "[parameters('sqlDWAdminPassword')]",
+                "version": "12.0"
+            },
+            "resources": [
+                {
+                    "name": "[parameters('sqlDWDBName')]",
+                    "type": "databases",
+                    "location": "[parameters('location')]",
+                    "apiVersion": "[parameters('apiVersion')]",
+                    "properties": {
+                        "edition": "DataWarehouse",
+                        "collation": "SQL_Latin1_General_CP1_CI_AS"
+                    },
+                    "dependsOn": [
+                        "[concat('Microsoft.Sql/servers/', parameters('sqlDWServerName'))]"
+                    ]
+                },
+                {
+                    "apiVersion": "[parameters('apiVersion')]",
+                    "type": "firewallrules",
+                    "location": "[parameters('location')]",
+                    "name": "AllowAllWindowsAzureIps",
+                    "properties": {
+                        "endIpAddress": "[parameters('endIpAddress')]",
+                        "startIpAddress": "[parameters('startIpAddress')]"
+                    },
+                    "dependsOn": [
+                        "[concat('Microsoft.Sql/servers/', parameters('sqlDWServerName'))]"
+                    ]
+                }
+            ]
+        }
+    ]
+}

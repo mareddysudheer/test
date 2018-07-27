@@ -1,0 +1,1 @@
+##This folder contains Storage Account base modules.
